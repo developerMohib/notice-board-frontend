@@ -1,36 +1,72 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Notice Management System
 
-## Getting Started
+A modern **Next.js 14+** (App Router) application for creating, publishing, and managing notices with responsive UI, form validation, real-time status toggling, and pagination.
 
-First, run the development server:
+Built with:
+- Next.js 14/15 (App Router)
+- TypeScript
+- Tailwind CSS
+- React Hook Form 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+## Features
+
+- 📝 **Create Notice** form with full validation
+  - Required fields
+  - Notice Type dropdown
+  - Clean error messages
+- 🎉 Success modal on successful publish
+
+- 📋 **Notices Listing** page
+  - Responsive table view
+  - Publish / Unpublish toggle (optimistic updates)
+  - Pagination (client-side or server-side)
+- 🔐 Protected routes (auth can be added later)
+- 🌙 Dark mode support (optional – via Tailwind)
+- Fully responsive design (mobile-first)
+
+## Tech Stack
+
+| Category           | Tools / Libraries                              |
+|--------------------|------------------------------------------------|
+| Framework          | Next.js 14+ (App Router)                       |
+| Language           | TypeScript                                     |
+| Styling            | Tailwind CSS                                   |
+| Form               | React Hook Form                                |
+| UI Components      | shadcn/ui (recommended) or custom components   |
+| Icons              | React icons                                    |
+
+## Project Structure
+
+```text
+app/
+├── (auth)/                     # Route group - future auth pages
+├── notices/
+│   ├── create/
+│   │   └── page.tsx
+│   ├── list/
+│   │   └── page.tsx
+├── api/
+├── layout.tsx                  # Root layout (minimal or global)
+├── globals.css
+└── favicon.ico
+
+components/
+├── ui/
+│   ├── button.tsx
+│   ├── Noticetable.tsx
+├── forms/
+│   └── CreateNoticeForm.tsx
+└── shared/
+    ├── Sidebar.tsx
+    ├── Navbar.tsx
+    └── Footer.tsx
+
+lib/
+├── api.ts                      # API fetch helpers
+├── validation.ts               # Zod schemas
+└── utils.ts
+
+public/
+├── images/
+└── icons/
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
