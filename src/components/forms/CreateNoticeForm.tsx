@@ -91,13 +91,16 @@ const CreateNoticeForm = () => {
                     {/* Main Form Card */}
                     <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 md:p-8">
                         {/* Target Type */}
-                        <div className="mb-8">
+                        <div>
+                            <p>Please fill in the details below</p>
+                        </div>
+                        <div className="my-8">
                             <label className="block text-sm font-semibold text-gray-900 mb-3">
                                 Target Department(s) or individual
                             </label>
                             <div>
-                                <select className="px-2 py-2 border border-gray-300 rounded-lg outline-none transition text-sm">
-                                    <option value="">Department or Individual </option>
+                                <select className="px-2 py-2 border border-gray-300 rounded-lg outline-none transition text-sm w-full">
+                                    <option value="">Individual</option>
                                     <option value="all">All Department</option>
                                     <option value="finance">Finance</option>
                                     <option value="hr">HR</option>
@@ -111,7 +114,7 @@ const CreateNoticeForm = () => {
                         </div>
 
                         {/* Notice Title */}
-                        <div className="mb-6">
+                        <div className="mb-4">
                             <label className="block text-sm font-semibold text-gray-900 mb-3">
                                 Notice Title <span className="text-red-500">*</span>
                             </label>
@@ -121,7 +124,7 @@ const CreateNoticeForm = () => {
                                 value={formData.noticeTitle}
                                 onChange={handleInputChange}
                                 placeholder="Write the Title of Notice"
-                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition placeholder:text-gray-400"
+                                className="w-full px-4 py-2 border border-gray-300 rounded-lg  outline-none transition placeholder:text-gray-400"
                                 required
                             />
                         </div>
@@ -140,7 +143,7 @@ const CreateNoticeForm = () => {
                                                 name="employeeId"
                                                 value={formData.employeeId}
                                                 onChange={handleInputChange}
-                                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition appearance-none"
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none transition appearance-none"
                                                 required
                                             >
                                                 <option value="">Select employee designation</option>
@@ -166,7 +169,7 @@ const CreateNoticeForm = () => {
                                                 value={formData.employeeName}
                                                 onChange={handleInputChange}
                                                 placeholder="Enter employee full name"
-                                                className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition placeholder:text-gray-400"
+                                                className="w-full pl-12 pr-4 py-2 border border-gray-300 rounded-lg outline-none transition placeholder:text-gray-400"
                                                 required
                                             />
                                         </div>
@@ -182,7 +185,7 @@ const CreateNoticeForm = () => {
                                                 name="position"
                                                 value={formData.position}
                                                 onChange={handleInputChange}
-                                                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition appearance-none"
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none transition appearance-none"
                                                 required
                                             >
                                                 <option value="">Select employee department</option>
@@ -198,8 +201,6 @@ const CreateNoticeForm = () => {
 
                                     </div>
                                 </div>
-
-
                             </div>
                         )}
 
@@ -215,7 +216,7 @@ const CreateNoticeForm = () => {
                                         name="noticeType"
                                         value={formData.noticeType}
                                         onChange={handleInputChange}
-                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition appearance-none"
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none transition appearance-none"
                                         required
                                     >
                                         <option value="">Select Notice Type</option>
@@ -244,7 +245,7 @@ const CreateNoticeForm = () => {
                                         name="publishDate"
                                         value={formData.publishDate}
                                         onChange={handleInputChange}
-                                        className="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition"
+                                        className="w-full pl-12 pr-4 py-2 border border-gray-300 rounded-lg outline-none transition"
                                         required
                                     />
                                 </div>
@@ -264,7 +265,7 @@ const CreateNoticeForm = () => {
                                     value={formData.noticeBody}
                                     onChange={handleInputChange}
                                     placeholder="Write the details about notice"
-                                    className="w-full px-4 py-3 focus:outline-none focus:ring-1 focus:ring-blue-500 resize-none"
+                                    className="w-full px-4 py-2 resize-none"
                                     required
                                 />
                             </div>
@@ -332,23 +333,24 @@ const CreateNoticeForm = () => {
 
 
                     {/* Form Actions */}
-                    <div className="flex flex-wrap items-center justify-between gap-4">
-                        <button
-                            type="button"
-                            className="px-8 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition font-medium"
-                        >
-                            Save as Draft
-                        </button>
+                    <div className="flex flex-wrap items-center justify-end gap-4">
+
                         <div className="flex items-center gap-4">
                             <button
                                 type="button"
-                                className="px-8 py-3 border border-gray-300 rounded-lg hover:bg-gray-50 transition font-medium"
+                                className="px-5 py-2 border rounded-full hover:bg-blue-700 transition font-medium"
                             >
                                 Cancel
                             </button>
                             <button
+                                type="button"
+                                className="px-5 py-2 border rounded-full hover:bg-blue-700 transition font-medium"
+                            >
+                                Save as Draft
+                            </button>
+                            <button
                                 type="submit"
-                                className="px-8 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium"
+                                className="px-5 py-2 bg-[#F95524] text-white rounded-full hover:bg-blue-700 transition font-medium"
                             >
                                 Publish Notice
                             </button>
