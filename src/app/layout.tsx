@@ -35,7 +35,7 @@ export default function RootLayout({
           </div>
           <div className="col-span-4">
             <Navbar />
-            <main>{children}</main>
+            <main className="p-4">{children}</main>
           </div>
         </div>
       </body>
