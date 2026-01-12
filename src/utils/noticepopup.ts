@@ -10,7 +10,7 @@ export const showNoticePublishedPopup = ({
     icon: "success",
     iconHtml:
       '<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414l4 4a1 1 0 011.414 0l8-8a1 1 0 011.414 0z" clipRule="evenodd" /></svg>',
-    iconColor: "#10B981", // Tailwind green-500
+    iconColor: "#10B981",
     title:
       '<span class="text-gray-800 font-bold text-xl">Notice Published Successfully</span>',
     html: `
@@ -33,7 +33,6 @@ export const showNoticePublishedPopup = ({
     didOpen: () => {
       const swal = Swal.getPopup();
 
-      // Create custom buttons
       const btnContainer = document.createElement("div");
       btnContainer.className = "flex justify-center gap-3 mt-4";
 
@@ -43,8 +42,7 @@ export const showNoticePublishedPopup = ({
         "px-4 py-2 border border-blue-300 text-blue-600 rounded-full hover:bg-blue-50 transition";
       viewBtn.onclick = () => {
         Swal.close();
-        // 👇 Replace with actual route or logic
-        window.location.href = "/notices"; // or useRouter().push(...)
+        window.location.href = "/notice-board";
       };
 
       const createBtn = document.createElement("button");

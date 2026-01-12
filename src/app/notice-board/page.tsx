@@ -1,12 +1,10 @@
-import Noticetable from "@/components/ui/Noticetable";
-import Pagination from "@/components/ui/Pagination";
+import NoticePage from "@/components/pages/NoticePage";
 
 const page = () => {
 
     return (
         <div>
-            <Noticetable />
-            <Pagination />
+            <NoticePage />
         </div>
     );
 };

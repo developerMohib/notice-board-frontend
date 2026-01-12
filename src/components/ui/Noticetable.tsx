@@ -1,10 +1,7 @@
 "use client";
-
-import { BiPlus } from "react-icons/bi";
-import { BsPencil, BsThreeDotsVertical } from "react-icons/bs";
-import Link from "next/link";
+import { BsThreeDotsVertical } from "react-icons/bs";
 import { useState, useEffect } from "react";
-import { useAllNotices } from "@/hooks/useGetNoticeAll";
+import { useNotices } from "@/hooks/useGetNoticeAll";
 import { BiCheck, BiX } from "react-icons/bi";
 import { BsEye, BsFiletypeWoff } from "react-icons/bs";
 import { FiEdit2 } from "react-icons/fi";
@@ -12,14 +9,22 @@ import { INotice } from "@/types/notice.types";
 import { instance } from "@/api/axiosInstance";
 import { showApiError } from "@/utils/errorpopup";
 import Swal from "sweetalert2";
+interface NoticeListProps {
+  page: number;
+  filters?: {
+    employeeName?: string;
+    department?: string;
+    status?: string;
+  };
+}
 
-const Noticetable = () => {
-    const { data, isLoading, refetch } = useAllNotices();
+const Noticetable = ({ page, filters }: NoticeListProps) => {
+    const limit = 5;
+    const { data, isLoading, refetch } = useNotices(page, limit, filters);
+    console.log("Notices data:", data);
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
     const notices: INotice[] = data?.data || [];
     const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
-    const activeNotices = notices?.filter(notice => notice.status.toLowerCase() === 'published');
-    const draftNotices = notices?.filter(notice => notice.status.toLowerCase() === 'draft');
 
     const handleRowCheckboxChange = (id: string, checked: boolean) => {
         if (checked) {
@@ -29,7 +34,6 @@ const Noticetable = () => {
         }
     };
 
-    // Handle "Select All" checkbox
     const handleSelectAll = (checked: boolean) => {
         if (checked) {
             setSelectedIds(notices.map((item) => item._id));
@@ -38,13 +42,10 @@ const Noticetable = () => {
         }
     };
 
-    // Check if all visible rows are selected
     const isAllSelected = notices.length > 0 && selectedIds.length === notices.length;
     const isIndeterminate = selectedIds.length > 0 && selectedIds.length < notices.length;
 
     useEffect(() => {
-        // Optional: Log selected IDs or trigger side effects
-        console.log("Selected notice IDs:", selectedIds);
     }, [selectedIds]);
 
     if (isLoading) return <p>Loading...</p>;
@@ -68,7 +69,6 @@ const Noticetable = () => {
 
     const handleStatusToggle = async (item: INotice) => {
         try {
-            console.log('id', item._id, 'current status', item.status);
             const newStatus = item.status.toLowerCase() === 'published'
                 ? 'unpublished'
                 : 'published';
@@ -84,8 +84,6 @@ const Noticetable = () => {
                 });
                 refetch();
             }
-
-            console.log('Status toggled:', res.data);
         } catch (error) {
             showApiError(error);
         }
@@ -93,86 +91,7 @@ const Noticetable = () => {
     return (
         <div className="rounded-lg border border-gray-200 overflow-x-auto">
 
-            <div className="flex justify-between items-center my-3">
-                <div>
-                    <h1 className="text-lg font-semibold">Notice Management</h1>
 
-                    <div className="flex items-center gap-3 mt-1 text-xs">
-                        <span className="text-[#00A46E]">Active Notice {activeNotices?.length || 0}</span>
-
-                        {/* Divider */}
-                        <span className="h-3 w-px bg-gray-400"></span>
-
-                        <span className="text-[#F95524]">Draft Notice {draftNotices?.length || 0}</span>
-                    </div>
-                </div>
-
-
-                <div className="flex items-center">
-                    <Link href="/create-notice" className="flex items-center gap-2 bg-[#F95524] text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors">
-                        <BiPlus className="text-lg" />
-                        <span>Create Notice</span>
-                    </Link>
-
-                    <button className="ml-2 flex items-center gap-2 border border-[#F95524] px-4 py-2 rounded hover:bg-gray-600 transition-colors text-[#F95524]">
-                        <BsPencil className="text-base" />
-                        <span>All Draft Notice</span>
-                    </button>
-                </div>
-            </div>
-
-
-            <div className="mb-4">
-
-                <div className="flex flex-row justify-end items-center gap-2 mb-6">
-                    <h1>Filter by:</h1>
-                    <div>
-                        <select className="px-2 py-2 border border-gray-300 rounded-lg outline-none transition text-sm">
-                            <option value="">Department or Individual </option>
-                            <option value="all">All Department</option>
-                            <option value="finance">Finance</option>
-                            <option value="hr">HR</option>
-                            <option value="sales">Sales Team</option>
-                            <option value="web">Web Team</option>
-                            <option value="database">Database Team</option>
-                            <option value="admin">Admin</option>
-                            <option value="individual">Individual</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <input
-                            type="text"
-                            placeholder="Employee id or Name"
-                            className="px-2 py-2 border border-gray-300 rounded-lg outline-none transition text-sm"
-                        />
-                    </div>
-
-                    {/* Status Filter */}
-                    <div>
-                        <select className="px-2 py-2 border border-gray-300 rounded-lg outline-none transition text-sm">
-                            <option value="">All Status</option>
-                            <option value="published">Published</option>
-                            <option value="unpublished">Unpublished</option>
-                            <option value="draft">Draft</option>
-                        </select>
-                    </div>
-
-                    {/* Published On Filter */}
-                    <div className="flex flex-col gap-1">
-                        <input
-                            type="date"
-                            className="px-2 py-2 border border-gray-300 rounded-lg outline-none transition text-sm"
-                        />
-                    </div>
-
-                    <div>
-                        <button className="px-2 py-2 border border-gray-300 rounded-lg outline-none transition text-sm">
-                            Reset Filters
-                        </button>
-                    </div>
-                </div>
-            </div>
 
 
 
@@ -282,7 +201,7 @@ const Noticetable = () => {
                                                                 onChange={() => handleStatusToggle(item)}
                                                                 className="sr-only peer"
                                                             />
-                                                            <div className="w-10 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
+                                                            <div className="w-10 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600"></div>
                                                         </label>
                                                     </div>
                                                 </div>

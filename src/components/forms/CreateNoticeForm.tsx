@@ -83,7 +83,6 @@ const CreateNoticeForm = () => {
             if (res.status === 201) {
 
                 showNoticePublishedPopup({ title: formData.title, resetForm: () => { } });
-                //   reset form logic here
                 setFormData({
                     department: 'individual',
                     title: '',
@@ -103,7 +102,6 @@ const CreateNoticeForm = () => {
     }
 
     const handleDraft = async () => {
-        // Add your draft saving logic here
         const status = 'draft';
         const details = { ...formData, status };
         try {
@@ -155,7 +153,6 @@ const CreateNoticeForm = () => {
                                 <option value="web">Web Team</option>
                                 <option value="database">Database Team</option>
                                 <option value="admin">Admin</option>
-                                <option value="individual">Individual</option>
                             </select>
                         </div>
                     </div>

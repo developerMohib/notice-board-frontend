@@ -38,7 +38,7 @@ export default function RootLayout({
           <div className="col-span-4">
             <ReactQueryProvider>
               <Navbar />
-              <main className="p-4 min-h-screen">{children}</main>
+              <main className="p-4">{children}</main>
             </ReactQueryProvider>
             <Footer />
           </div>

@@ -99,7 +99,7 @@ const Sidebar = () => {
           </Link>
         </div>
 
-        <nav className="py-4 px-2 space-y-1">
+        <nav className="px-2 space-y-1">
           {menuItems.map((item) => {
             const isActive = pathname === item.href;
             const hasChildren = item.children && item.children.length > 0;
