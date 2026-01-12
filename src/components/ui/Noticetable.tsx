@@ -146,7 +146,7 @@ const Noticetable = () => {
 
 
 
-            <table className="min-w-full divide-y divide-gray-200 text-xs">
+            <table className="min-w-full divide-y divide-gray-200 text-sm">
                 <thead className="bg-gray-50">
                     <tr>
                         {/* Compact header cells */}
@@ -178,11 +178,11 @@ const Noticetable = () => {
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                    {notices.map((item) => {
+                    {notices?.map((item) => {
                         const isChecked = selectedIds.includes(item._id);
                         return (
                             <tr key={item._id} className="hover:bg-gray-50 transition">
-                                <td className="px-3 py-1.5 whitespace-nowrap">
+                                <td className="px-3 py-1.5">
                                     <div className="flex items-center">
                                         <input
                                             type="checkbox"
@@ -190,7 +190,7 @@ const Noticetable = () => {
                                             checked={isChecked}
                                             onChange={(e) => handleRowCheckboxChange(item._id, e.target.checked)}
                                         />
-                                        <p className="ml-1.5 font-medium text-gray-900 max-w-xs line-clamp-1 ">
+                                        <p className="ml-1.5 font-medium text-gray-900 max-w-3xs wrap">
                                             {item.title}
                                         </p>
                                     </div>

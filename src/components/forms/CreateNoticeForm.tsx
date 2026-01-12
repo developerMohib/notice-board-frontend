@@ -1,21 +1,24 @@
 'use client';
-import Link from "next/link";
+import { instance } from "@/api/axiosInstance";
+import { showApiError } from "@/utils/errorpopup";
+import { showNoticePublishedPopup } from "@/utils/noticepopup";
 import { useState } from "react";
 import { BiCalendar, BiChevronDown, BiChevronDownCircle, BiChevronDownSquare, BiUpload, BiUser } from "react-icons/bi";
 import { BsTwitter } from "react-icons/bs";
 import { FiFileText } from "react-icons/fi";
 import { IoIosArrowBack } from "react-icons/io";
+import Swal from "sweetalert2";
 
 const CreateNoticeForm = () => {
     const [formData, setFormData] = useState({
-        targetType: 'individual',
-        noticeTitle: '',
+        department: 'individual',
+        title: '',
         employeeId: '',
         employeeName: '',
         position: '',
         noticeType: '',
         publishDate: '',
-        noticeBody: '',
+        description: '',
         attachments: [] as File[]
     });
 
@@ -70,12 +73,61 @@ const CreateNoticeForm = () => {
         setUploadedFile(null);
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
-        // Add your form submission logic here
-    };
+        const status = 'published';
+        const details = { ...formData, status };
+        try {
+            const res = await instance.post('/notice/create', details);
+            if (res.status === 201) {
 
+                showNoticePublishedPopup({ title: formData.title, resetForm: () => { } });
+                //   reset form logic here
+                setFormData({
+                    department: 'individual',
+                    title: '',
+                    employeeId: '',
+                    employeeName: '',
+                    position: '',
+                    noticeType: '',
+                    publishDate: '',
+                    description: '',
+                    attachments: [] as File[]
+                });
+
+            }
+        } catch (error) {
+            showApiError(error);
+        }
+    }
+
+    const handleDraft = async () => {
+        // Add your draft saving logic here
+        const status = 'draft';
+        const details = { ...formData, status };
+        try {
+            const res = await instance.post('/notice/create', details);
+            if (res.status === 201) {
+
+                showNoticePublishedPopup({ title: formData.title, resetForm: () => { } });
+                //   reset form logic here
+                setFormData({
+                    department: 'individual',
+                    title: '',
+                    employeeId: '',
+                    employeeName: '',
+                    position: '',
+                    noticeType: '',
+                    publishDate: '',
+                    description: '',
+                    attachments: [] as File[]
+                });
+
+            }
+        } catch (error) {
+            showApiError(error);
+        }
+    }
     return (
         <div>
             <p className="flex items-center gap-2 text-sm text-gray-600 hover:text-[#F95524] mb-3"><IoIosArrowBack className="text-base border border-gray-400" />
@@ -114,8 +166,8 @@ const CreateNoticeForm = () => {
                         </label>
                         <input
                             type="text"
-                            name="noticeTitle"
-                            value={formData.noticeTitle}
+                            name="title"
+                            value={formData.title}
                             onChange={handleInputChange}
                             placeholder="Write the Title of Notice"
                             className="w-full px-4 py-2 border border-gray-300 rounded-lg  outline-none transition placeholder:text-gray-400"
@@ -124,7 +176,7 @@ const CreateNoticeForm = () => {
                     </div>
 
                     {/* Employee Details Section */}
-                    {formData.targetType === 'individual' && (
+                    {formData.department === 'individual' && (
                         <div className="space-y-6 mb-6">
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                                 {/* Employee ID */}
@@ -214,12 +266,12 @@ const CreateNoticeForm = () => {
                                     required
                                 >
                                     <option value="">Select Notice Type</option>
-                                    <option value="warningDesiplaine">Warning / Disciplinary</option>
-                                    <option value="appreciationRecognition">Appreciation / Recognition</option>
-                                    <option value="attendanceLeaveIssue">Attendance / Leave Issue</option>
-                                    <option value="payrollCompensation">Payroll / Compensation</option>
-                                    <option value="contractRoleUpdate">Contract / Role Update</option>
-                                    <option value="advisoryPersonalReminder">Advisory / Personal Reminder</option>
+                                    <option value="Warning Desiplaine">Warning / Disciplinary</option>
+                                    <option value="Appreciation & Recognition">Appreciation / Recognition</option>
+                                    <option value="Attendance Leave Issue">Attendance / Leave Issue</option>
+                                    <option value="Pay Roll Compensation">Payroll / Compensation</option>
+                                    <option value="Contract Role Update">Contract / Role Update</option>
+                                    <option value="Advisory Personal Reminder">Advisory / Personal Reminder</option>
                                 </select>
                                 <BiChevronDownSquare className="absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none" size={20} />
                             </div>
@@ -253,8 +305,8 @@ const CreateNoticeForm = () => {
 
 
                             <textarea
-                                name="noticeBody"
-                                value={formData.noticeBody}
+                                name="description"
+                                value={formData.description}
                                 onChange={handleInputChange}
                                 placeholder="Write the details about notice"
                                 className="w-full px-4 py-2 resize-none"
@@ -336,6 +388,7 @@ const CreateNoticeForm = () => {
                         </button>
                         <button
                             type="button"
+                            onClick={handleDraft}
                             className="px-5 py-2 border rounded-full hover:bg-blue-700 transition font-medium"
                         >
                             Save as Draft
