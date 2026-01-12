@@ -9,8 +9,7 @@ const NoticeDetails = ({ id }: NoticeDetailsProps) => {
     const noticeId = params?.id as string | undefined;
     const { data, isLoading } = useOneNoticeDetails(noticeId || '');
     const noticeData = data?.data;
-console.log('Notice ID:', id);
-    
+     
     if (isLoading) return <p>Loading...</p>;
 
     if (!noticeId || !data) {
@@ -20,7 +19,7 @@ console.log('Notice ID:', id);
     return (
         <div>
             <p>employee Name: {noticeData?.employeeName}</p>
-            <p>ID: {noticeId}</p>
+            <p>ID: {noticeId} {id} </p>
             {/* Render notice data */}
         </div>
     );

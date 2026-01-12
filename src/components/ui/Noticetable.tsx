@@ -22,7 +22,7 @@ interface NoticeListProps {
 const Noticetable = ({ page, filters }: NoticeListProps) => {
     const limit = 5;
     const { data, isLoading, refetch } = useNotices(page, limit, filters);
-    console.log("Notices data:", data);
+
     const [selectedIds, setSelectedIds] = useState<string[]>([]);
     const notices: INotice[] = data?.data || [];
     const [openDropdownId, setOpenDropdownId] = useState<string | null>(null);
