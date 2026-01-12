@@ -8,21 +8,20 @@ import Link from 'next/link';
 import { useNotices } from '@/hooks/useGetNoticeAll';
 import { INotice } from '@/types/notice.types';
 interface NoticeFilters {
-  employeeName?: string;
-  department?: string;
-  status?: string;
+    employeeName?: string;
+    department?: string;
+    status?: string;
 }
 
 const NoticePage = () => {
     const [page, setPage] = useState(1);
     const [filters, setFilters] = useState<NoticeFilters>({});
-    const { data } = useNotices(page, 5, filters);
-    const notices: INotice[] = data?.notices || [];
-
+    const { data, refetch } = useNotices(page, 5, filters);
+    const notices: INotice[] = data?.data || [];
 
     const activeNotices = notices?.filter(notice => notice.status.toLowerCase() === 'published');
     const draftNotices = notices?.filter(notice => notice.status.toLowerCase() === 'draft');
-
+    refetch()
     return (
         <div>
             <div className="flex justify-between items-center my-3">
@@ -54,10 +53,21 @@ const NoticePage = () => {
 
             <div className="mb-4">
                 <div className="flex flex-row justify-end items-center gap-2 mb-6">
-                    <h1>Filter by:</h1>
+                    <h1 className="text-sm font-medium">Filter by:</h1>
+
+                    {/* Department Filter */}
                     <div>
-                        <select className="px-2 py-2 border border-gray-300 rounded-lg outline-none transition text-sm">
-                            <option value="">Department or Individual </option>
+                        <select
+                            value={filters.department || ''}
+                            onChange={(e) =>
+                                setFilters((prev) => ({
+                                    ...prev,
+                                    department: e.target.value || undefined, // use undefined to remove key
+                                }))
+                            }
+                            className="px-2 py-2 border border-gray-300 rounded-lg outline-none transition text-sm"
+                        >
+                            <option value="">Department or Individual</option>
                             <option value="all">All Department</option>
                             <option value="finance">Finance</option>
                             <option value="hr">HR</option>
@@ -69,17 +79,34 @@ const NoticePage = () => {
                         </select>
                     </div>
 
+                    {/* Employee Name Filter */}
                     <div>
                         <input
                             type="text"
-                            placeholder="Employee id or Name"
+                            placeholder="Employee ID or Name"
+                            value={filters.employeeName || ''}
+                            onChange={(e) =>
+                                setFilters((prev) => ({
+                                    ...prev,
+                                    employeeName: e.target.value || undefined,
+                                }))
+                            }
                             className="px-2 py-2 border border-gray-300 rounded-lg outline-none transition text-sm"
                         />
                     </div>
 
                     {/* Status Filter */}
                     <div>
-                        <select className="px-2 py-2 border border-gray-300 rounded-lg outline-none transition text-sm">
+                        <select
+                            value={filters.status || ''}
+                            onChange={(e) =>
+                                setFilters((prev) => ({
+                                    ...prev,
+                                    status: e.target.value || undefined,
+                                }))
+                            }
+                            className="px-2 py-2 border border-gray-300 rounded-lg outline-none transition text-sm"
+                        >
                             <option value="">All Status</option>
                             <option value="published">Published</option>
                             <option value="unpublished">Unpublished</option>
@@ -87,16 +114,22 @@ const NoticePage = () => {
                         </select>
                     </div>
 
-                    {/* Published On Filter */}
+                    {/* Published On Filter (Optional: Add later if needed) */}
                     <div className="flex flex-col gap-1">
                         <input
                             type="date"
+                            // You can add publishedOn filter later
                             className="px-2 py-2 border border-gray-300 rounded-lg outline-none transition text-sm"
+                            disabled // disable for now unless backend supports it
                         />
                     </div>
 
+                    {/* Reset Button */}
                     <div>
-                        <button onClick={() => setFilters({})} className="px-2 py-2 border border-gray-300 rounded-lg outline-none transition text-sm">
+                        <button
+                            onClick={() => setFilters({})}
+                            className="px-2 py-2 border border-gray-300 rounded-lg outline-none transition text-sm bg-white hover:bg-gray-50"
+                        >
                             Reset Filters
                         </button>
                     </div>
@@ -105,7 +138,7 @@ const NoticePage = () => {
 
 
             <Noticetable page={page} filters={filters} />
-            <Pagination page={page} onPageChange={setPage} filters={filters}   />
+            <Pagination page={page} onPageChange={setPage} filters={filters} />
         </div>
     );
 };

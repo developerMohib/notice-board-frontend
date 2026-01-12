@@ -10,12 +10,12 @@ import { instance } from "@/api/axiosInstance";
 import { showApiError } from "@/utils/errorpopup";
 import Swal from "sweetalert2";
 interface NoticeListProps {
-  page: number;
-  filters?: {
-    employeeName?: string;
-    department?: string;
-    status?: string;
-  };
+    page: number;
+    filters?: {
+        employeeName?: string;
+        department?: string;
+        status?: string;
+    };
 }
 
 const Noticetable = ({ page, filters }: NoticeListProps) => {
@@ -90,11 +90,6 @@ const Noticetable = ({ page, filters }: NoticeListProps) => {
     };
     return (
         <div className="rounded-lg border border-gray-200 overflow-x-auto">
-
-
-
-
-
             <table className="min-w-full divide-y divide-gray-200 text-base p-4">
                 <thead className="bg-gray-50">
                     <tr>

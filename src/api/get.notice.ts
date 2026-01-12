@@ -21,8 +21,3 @@ export const fetchNotices = async (
   const res = await instance.get(`/notice/get-all?${params}`);
   return res.data;
 };
-
-export const fetchAllNotices = async () => {
-  const res = await instance.get("/notice/get-all");
-  return res?.data;
-};

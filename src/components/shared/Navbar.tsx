@@ -25,7 +25,6 @@ const Navbar = () => {
   return (
     <nav className="px-4 py-1 bg-white">
       <div className="flex items-center justify-between">
-        {/* Left side - Greeting & Date */}
         <div>
           <h2 className="text-xl font-semibold text-gray-900">
             {getGreeting()}, Asif
@@ -33,18 +32,18 @@ const Navbar = () => {
           <p className="mt-0.5 text-sm text-gray-500">{currentDate}</p>
         </div>
 
-        {/* Right side - User info & Notification */}
-        <div className="flex items-center gap-6">
-          {/* Notification Bell */}
+        <div className="flex items-center">
           <button
             type="button"
-            className="text-gray-600 hover:text-gray-900 transition-colors"
+            className="relative p-1 hover:bg-gray-100 rounded-full transition-colors group"
             aria-label="Notifications"
           >
-            <CiBellOn className='border-r' size={24} />
+            <CiBellOn 
+              size={24} 
+              className="text-gray-600 transition-colors border-r-2 border-gray-300 " 
+            />
           </button>
 
-          {/* User Info */}
           <div className="flex items-center gap-3">
             <div className="text-right">
               <p className="font-medium text-gray-900">Asif Khan</p>
