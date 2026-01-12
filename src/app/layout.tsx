@@ -3,6 +3,8 @@ import { Inter, Roboto } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/shared/Navbar";
 import Sidebar from "@/components/shared/Sidebar";
+import ReactQueryProvider from "@/provider/ReactQueryProvider";
+import Footer from "@/components/shared/Footer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -29,13 +31,16 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${roboto.variable} antialiased`}
       >
-        <div className="md:grid grid-cols-5 border-8 border-red-400 min-h-screen">
-          <div className="grid-cols-1 border-r-2 min-h-screen hidden md:block">
+        <div className="md:grid grid-cols-5">
+          <aside className="col-span-1 bg-white">
             <Sidebar />
-          </div>
+          </aside>
           <div className="col-span-4">
-            <Navbar />
-            <main className="p-4">{children}</main>
+            <ReactQueryProvider>
+              <Navbar />
+              <main className="p-4 min-h-screen">{children}</main>
+            </ReactQueryProvider>
+            <Footer />
           </div>
         </div>
       </body>

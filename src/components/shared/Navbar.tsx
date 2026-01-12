@@ -2,8 +2,8 @@ import Image from 'next/image';
 import { CiBellOn } from 'react-icons/ci';
 
 const Navbar = () => {
-    const currentHour = new Date().getHours();
-    const getGreeting = () => {
+  const currentHour = new Date().getHours();
+  const getGreeting = () => {
     if (currentHour >= 5 && currentHour < 12) {
       return 'Good Morning';
     }
@@ -23,7 +23,7 @@ const Navbar = () => {
   });
 
   return (
-    <nav className="border-b bg-white px-4 py-1">
+    <nav className="px-4 py-1 bg-white">
       <div className="flex items-center justify-between">
         {/* Left side - Greeting & Date */}
         <div>
@@ -36,7 +36,7 @@ const Navbar = () => {
         {/* Right side - User info & Notification */}
         <div className="flex items-center gap-6">
           {/* Notification Bell */}
-          <button 
+          <button
             type="button"
             className="text-gray-600 hover:text-gray-900 transition-colors"
             aria-label="Notifications"

@@ -1,8 +1,8 @@
-
 export default function Home() {
+
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+    <div>
+      <h1>Welcome to the Notice Board</h1>
+    </div>
   );
 }
