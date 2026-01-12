@@ -1,15 +1,13 @@
 import NoticeDetails from '@/components/pages/NoticeDetails';
 
-const page = ({
-  params
-}: {
-  params: { category: string; id: string }
-}) => {
-    return (
-        <div>
-            <NoticeDetails params={params}   />
-        </div>
-    );
+interface Props {
+  params: { 
+    id: string 
+  }
+}
+
+const Page = ({ params }: Props) => {
+  return <NoticeDetails id={params.id} />;
 };
 
-export default page;
+export default Page;

@@ -1,13 +1,15 @@
 "use client";
 import { useOneNoticeDetails } from '@/hooks/useGetNoticeAll';
 import { useParams } from 'next/navigation';
-
-const NoticeDetails = () => {
+interface NoticeDetailsProps {
+  id: string; 
+}
+const NoticeDetails = ({ id }: NoticeDetailsProps) => {
     const params = useParams();
     const noticeId = params?.id as string | undefined;
     const { data, isLoading } = useOneNoticeDetails(noticeId || '');
     const noticeData = data?.data;
-
+console.log('Notice ID:', id);
     
     if (isLoading) return <p>Loading...</p>;
 
