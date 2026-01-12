@@ -1,5 +1,5 @@
 "use client";
-import {  fetchNotices } from '@/api/get.notice';
+import { fetchNotices, oneNotice } from '@/api/get.notice';
 import { useQuery } from '@tanstack/react-query';
 
 export const useNotices = (
@@ -14,3 +14,13 @@ export const useNotices = (
     retry: 1,
   });
 };
+
+
+export const useOneNoticeDetails = (id: string) => {
+  return useQuery({
+    queryKey: ['notice', id],
+    queryFn: () => oneNotice(id),
+    staleTime: 1000 * 60 * 2,
+    retry: 1,
+  });
+}

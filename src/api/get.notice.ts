@@ -1,13 +1,5 @@
 import { instance } from "./axiosInstance";
 
-// export const fetchNotices = async (page = 1, limit = 10) => {
-//   const res = await instance.get("/notice/get-all", {
-//     params: { page, limit },
-//   });
-//   return res?.data;
-// };
-
-
 export const fetchNotices = async (
   page = 1,
   limit = 5,
@@ -19,5 +11,10 @@ export const fetchNotices = async (
     ...filters,
   });
   const res = await instance.get(`/notice/get-all?${params}`);
+  return res.data;
+};
+
+export const oneNotice = async (id: string) => {
+  const res = await instance.get(`/notice/get-single/${id}`);
   return res.data;
 };

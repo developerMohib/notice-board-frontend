@@ -9,6 +9,7 @@ import { INotice } from "@/types/notice.types";
 import { instance } from "@/api/axiosInstance";
 import { showApiError } from "@/utils/errorpopup";
 import Swal from "sweetalert2";
+import Link from "next/link";
 interface NoticeListProps {
     page: number;
     filters?: {
@@ -94,29 +95,29 @@ const Noticetable = ({ page, filters }: NoticeListProps) => {
                 <thead className="bg-gray-50">
                     <tr>
                         {/* Compact header cells */}
-                        <th scope="col" className="px-3 py-2 text-left font-medium text-gray-500 tracking-wider whitespace-nowrap">
+                        <th scope="col" className="px-3 py-2 text-left  text-gray-500 tracking-wider whitespace-nowrap">
                             <input
                                 type="checkbox"
-                                className="h-3.5 w-3.5 text-blue-600 rounded focus:ring-blue-500"
+                                className="h-3.5 w-3.5 text-blue-600 rounded focus:ring-blue-500 mr-2"
                                 checked={isAllSelected}
                                 onChange={(e) => handleSelectAll(e.target.checked)}
                                 ref={(el) => { if (el) el.indeterminate = isIndeterminate; }}
                             />
                             <span className="ml-1.5">Title</span>
                         </th>
-                        <th scope="col" className="px-3 py-2 text-left font-medium text-gray-500 tracking-wider whitespace-nowrap">
+                        <th scope="col" className="px-3 py-2 text-left  text-gray-500 tracking-wider whitespace-nowrap">
                             Notice Type
                         </th>
-                        <th scope="col" className="px-3 py-2 text-left font-medium text-gray-500 tracking-wider whitespace-nowrap">
+                        <th scope="col" className="px-3 py-2 text-left  text-gray-500 tracking-wider whitespace-nowrap">
                             Departments
                         </th>
-                        <th scope="col" className="px-3 py-2 text-left font-medium text-gray-500 tracking-wider whitespace-nowrap">
+                        <th scope="col" className="px-3 py-2 text-left  text-gray-500 tracking-wider whitespace-nowrap">
                             Published On
                         </th>
-                        <th scope="col" className="px-3 py-2 text-left font-medium text-gray-500 tracking-wider whitespace-nowrap">
+                        <th scope="col" className="px-3 py-2 text-left  text-gray-500 tracking-wider whitespace-nowrap">
                             Status
                         </th>
-                        <th scope="col" className="px-3 py-2 text-left font-medium text-gray-500 tracking-wider whitespace-nowrap">
+                        <th scope="col" className="px-3 py-2 text-left  text-gray-500 tracking-wider whitespace-nowrap">
                             Actions
                         </th>
                     </tr>
@@ -130,22 +131,22 @@ const Noticetable = ({ page, filters }: NoticeListProps) => {
                                     <div className="flex items-center">
                                         <input
                                             type="checkbox"
-                                            className="h-3.5 w-3.5 text-blue-600 rounded focus:ring-blue-500"
+                                            className="h-3.5 w-3.5 text-blue-600 rounded focus:ring-blue-500 mr-2"
                                             checked={isChecked}
                                             onChange={(e) => handleRowCheckboxChange(item._id, e.target.checked)}
                                         />
-                                        <p className="ml-1.5 font-medium text-gray-900 max-w-3xs wrap">
+                                        <p className="ml-1.5 text-sm text-gray-900 max-w-3xs wrap">
                                             {item.title}
                                         </p>
                                     </div>
                                 </td>
-                                <td className="px-3 py-1.5 capitalize">
+                                <td className="px-3 py-1.5 capitalize text-sm">
                                     {item.noticeType}
                                 </td>
-                                <td className="px-3 py-1.5 capitalize">
+                                <td className="px-3 py-1.5 capitalize text-sm">
                                     {item.department}
                                 </td>
-                                <td className="px-3 py-1.5">
+                                <td className="px-3 py-1.5 text-sm">
                                     {new Date(item.createdAt)
                                         .toLocaleDateString("en-GB", {
                                             day: "2-digit",
@@ -155,7 +156,7 @@ const Noticetable = ({ page, filters }: NoticeListProps) => {
                                         .replace(/ /g, "-")}
                                 </td>
                                 <td className="px-3 py-1.5">
-                                    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-medium capitalize ${getStatusColor(item.status)}`}>
+                                    <span className={`inline-flex items-center px-2 py-0.5 rounded-full text-[10px]  capitalize ${getStatusColor(item.status)}`}>
                                         {item.status.toLowerCase() === 'published' && <BiCheck size={10} className="mr-0.5" />}
                                         {item.status.toLowerCase() === 'unpublished' && <BsFiletypeWoff size={10} className="mr-0.5" />}
                                         {item.status.toLowerCase() === 'draft' && <BiX size={10} className="mr-0.5" />}
@@ -164,9 +165,9 @@ const Noticetable = ({ page, filters }: NoticeListProps) => {
                                 </td>
                                 <td className="py-1.5">
                                     <div className="flex items-center gap-1">
-                                        <button className="p-1 text-gray-500 hover:text-gray-700 transition">
+                                        <Link href={`/notices/${item._id}`} className="p-1 text-gray-500 hover:text-gray-700 transition">
                                             <BsEye size={14} />
-                                        </button>
+                                        </Link >
                                         <button className="p-1 text-blue-600 hover:text-blue-800 transition">
                                             <FiEdit2 size={14} />
                                         </button>
@@ -186,7 +187,7 @@ const Noticetable = ({ page, filters }: NoticeListProps) => {
 
                                                     {/* Status Toggle */}
                                                     <div className="px-4 py-2 flex items-center justify-between hover:bg-gray-50">
-                                                        <span className="text-sm font-medium">{
+                                                        <span className="text-sm ">{
                                                             item.status.charAt(0).toUpperCase() + item.status.slice(1)
                                                         }</span>
                                                         <label className="relative inline-flex items-center cursor-pointer">
