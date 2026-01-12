@@ -8,65 +8,149 @@ Built with:
 - Tailwind CSS
 - React Hook Form 
 
-## Features
+---
 
-- 📝 **Create Notice** form with full validation
-  - Required fields
-  - Notice Type dropdown
-  - Clean error messages
-- 🎉 Success modal on successful publish
+## ✨ Features
 
-- 📋 **Notices Listing** page
-  - Responsive table view
-  - Publish / Unpublish toggle (optimistic updates)
-  - Pagination (client-side or server-side)
-- 🔐 Protected routes (auth can be added later)
-- 🌙 Dark mode support (optional – via Tailwind)
-- Fully responsive design (mobile-first)
+### 📝 **Notice Creation**
+- Rich form with validation (title, description, type, department)
+- Support for **individual** or **department-wide** notices
+- Save as **Draft** or **Publish Immediately**
+- Success confirmation modal on publish
 
-## Tech Stack
+### 📋 **Notice Management**
+- Responsive table view with status badges
+- **Real-time status toggle** (Published ↔ Unpublished)
+- **Dynamic filtering** by:
+  - Department (`HR`, `Finance`, `Sales`, etc.)
+  - Status (`Published`, `Draft`, `Unpublished`)
+  - Employee Name / ID (search)
+- **Server-side pagination** (5 items per page)
 
-| Category           | Tools / Libraries                              |
-|--------------------|------------------------------------------------|
-| Framework          | Next.js 14+ (App Router)                       |
-| Language           | TypeScript                                     |
-| Styling            | Tailwind CSS                                   |
-| Form               | React Hook Form                                |
-| UI Components      | shadcn/ui (recommended) or custom components   |
-| Icons              | React icons                                    |
+### 🎨 **UI/UX**
+- Clean, professional design with Tailwind CSS
+- Fully responsive (mobile, tablet, desktop)
+- Intuitive action dropdowns (view, edit, delete, toggle)
+- Loading states & error handling
+- Optimized performance with React Query caching
 
-## Project Structure
+### 🔒 **Extensible Architecture**
+- Ready for authentication (route groups prepared)
+- Type-safe with TypeScript interfaces
+- Modular component structure
+- API abstraction layer
+
+---
+
+## 🛠 Tech Stack
+
+| Category           | Technologies                                                                 |
+|--------------------|------------------------------------------------------------------------------|
+| **Framework**      | Next.js 14+ (App Router)                                                    |
+| **Language**       | TypeScript                                                                  |
+| **Styling**        | Tailwind CSS + Custom Components                                            |
+| **State Mgmt**     | React Query (`@tanstack/react-query`)                                       |
+| **Forms**          | Controlled Components (no external lib — lightweight)                       |
+| **Icons**          | React Icons                                                                 |
+| **API Client**     | Axios                                                                       |
+| **Validation**     | Backend: Mongoose Schema<br>Frontend: Manual + Zod (optional)               |
+| **Linting**        | ESLint + Prettier                                                           |
+
+> 💡 **Why no React Hook Form?**  
+> Given the form size and existing controlled state pattern, we opted for simplicity and full control without extra dependencies.
+
+---
+
+## 📁 Project Structure
 
 ```text
-app/
-├── (auth)/                     # Route group - future auth pages
-├── notices/
-│   ├── create/
-│   │   └── page.tsx
-│   ├── list/
-│   │   └── page.tsx
-├── api/
-├── layout.tsx                  # Root layout (minimal or global)
-├── globals.css
-└── favicon.ico
-
-components/
-├── ui/
-│   ├── button.tsx
-│   ├── Noticetable.tsx
-├── forms/
-│   └── CreateNoticeForm.tsx
-└── shared/
-    ├── Sidebar.tsx
-    ├── Navbar.tsx
-    └── Footer.tsx
-
-lib/
-├── api.ts                      # API fetch helpers
-├── validation.ts               # Zod schemas
-└── utils.ts
-
-public/
-├── images/
-└── icons/
+/
+├── app/ # App Router (all routes)
+│ ├── api/ # Route handlers (backend logic)
+│ │ └── notice/ # Notice-related API endpoints
+│ ├── create-notice/ # Create notice form page
+│ │ └── page.tsx
+│ ├── notices/ # Notice listing page
+│ │ ├── [id]/ # Dynamic notice detail page
+│ │ │ └── page.tsx
+│ │ └── page.tsx
+│ ├── layout.tsx # Root layout (includes Sidebar)
+│ ├── not-found.tsx # Custom 404 page
+│ └── globals.css # Global styles
+│
+├── components/ # Reusable components
+│ ├── ui/ # Generic UI (buttons, cards)
+│ │ ├── Button.tsx
+│ │ └── Pagination.tsx
+│ ├── forms/ # Form-specific components
+│ │ └── CreateNoticeForm.tsx
+│ └── tables/ # Data tables
+│ └── Noticetable.tsx
+│
+├── hooks/ # Custom React hooks
+│ └── useGetNoticeAll.ts # React Query hooks for notices
+│
+├── lib/ # Utilities & helpers
+│ ├── api/ # Axios instance
+│ │ └── axiosInstance.ts
+│ └── utils/ # Popup, error handling
+│ ├── noticepopup.ts
+│ └── errorpopup.ts
+│
+├── public/ # Static assets
+│ └── images/
+│ └── nebsLogo.png
+│
+├── types/ # TypeScript interfaces
+│ └── notice.types.ts
+│
+├── .env.local # Environment variables
+├── next.config.ts # Next.js config
+├── tailwind.config.ts # Tailwind config
+└── package.json
 ```
+
+
+## 🌐 API Integration
+
+### Base URL
+All API requests are prefixed with:
+
+```env
+# .env.local
+NEXT_PUBLIC_API_BASE_URL=http://localhost:3000
+
+POST - /api/notice/create
+Create new notice
+
+GET -/api/notice/get-all
+Get paginated notices
+
+PATCH - /api/notice/toggle-status/:id
+Toggle notice status
+
+GET one
+/api/notice/get-single/:id
+Get single notice 
+
+
+git clone https://github.com/developerMohib/notice-board-frontend
+cd notice-management-system
+
+Install dependencies
+- npm i
+
+Set up environment variables
+
+Run the development
+- npm run dev
+
+🧪 Testing
+Manual Testing: Use browser dev tools to verify:
+- Form submission → success popup
+- Filter changes → correct API calls
+- Pagination → proper page navigation
+Future: Add Jest + React Testing Library
+
+Frontend (Vercel)
+Push to GitHub
