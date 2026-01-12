@@ -89,6 +89,10 @@ const Noticetable = ({ page, filters }: NoticeListProps) => {
             showApiError(error);
         }
     };
+
+    if (notices.length === 0) {
+        return <p>No notices found.</p>;
+    }
     return (
         <div className="rounded-lg border border-gray-200 overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200 text-base p-4">
