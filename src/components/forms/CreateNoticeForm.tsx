@@ -1,5 +1,6 @@
 'use client';
 import { instance } from "@/api/axiosInstance";
+import { useAllNotices } from "@/hooks/useGetNoticeAll";
 import { showApiError } from "@/utils/errorpopup";
 import { showNoticePublishedPopup } from "@/utils/noticepopup";
 import { useState } from "react";
@@ -7,9 +8,9 @@ import { BiCalendar, BiChevronDown, BiChevronDownCircle, BiChevronDownSquare, Bi
 import { BsTwitter } from "react-icons/bs";
 import { FiFileText } from "react-icons/fi";
 import { IoIosArrowBack } from "react-icons/io";
-import Swal from "sweetalert2";
 
 const CreateNoticeForm = () => {
+    const { refetch } = useAllNotices();
     const [formData, setFormData] = useState({
         department: 'individual',
         title: '',
@@ -94,7 +95,7 @@ const CreateNoticeForm = () => {
                     description: '',
                     attachments: [] as File[]
                 });
-
+                refetch();
             }
         } catch (error) {
             showApiError(error);
@@ -110,7 +111,7 @@ const CreateNoticeForm = () => {
             if (res.status === 201) {
 
                 showNoticePublishedPopup({ title: formData.title, resetForm: () => { } });
-                //   reset form logic here
+
                 setFormData({
                     department: 'individual',
                     title: '',
