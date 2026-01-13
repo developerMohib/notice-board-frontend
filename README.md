@@ -118,7 +118,7 @@ All API requests are prefixed with:
 
 ```env
 # .env.local
-NEXT_PUBLIC_API_BASE_URL=http://localhost:3000
+- in frontend i not use image upload yet, that's why cloudinary not exist
 
 POST - /api/notice/create
 Create new notice

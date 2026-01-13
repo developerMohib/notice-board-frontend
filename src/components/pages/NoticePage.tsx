@@ -62,7 +62,7 @@ const NoticePage = () => {
                             onChange={(e) =>
                                 setFilters((prev) => ({
                                     ...prev,
-                                    department: e.target.value || undefined, // use undefined to remove key
+                                    department: e.target.value || undefined,
                                 }))
                             }
                             className="px-2 py-2 border border-gray-300 rounded-lg outline-none transition text-sm"
@@ -118,9 +118,8 @@ const NoticePage = () => {
                     <div className="flex flex-col gap-1">
                         <input
                             type="date"
-                            // You can add publishedOn filter later
                             className="px-2 py-2 border border-gray-300 rounded-lg outline-none transition text-sm"
-                            disabled // disable for now unless backend supports it
+                            disabled
                         />
                     </div>
 
