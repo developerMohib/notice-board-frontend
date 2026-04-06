@@ -1,5 +1,5 @@
 "use client";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Pagination from '../ui/Pagination';
 import Noticetable from '../ui/Noticetable';
 import { BsPencil } from 'react-icons/bs';
@@ -21,7 +21,12 @@ const NoticePage = () => {
 
     const activeNotices = notices?.filter(notice => notice.status.toLowerCase() === 'published');
     const draftNotices = notices?.filter(notice => notice.status.toLowerCase() === 'draft');
-    refetch()
+
+useEffect(() => {
+  refetch();
+}, [page, filters]);
+
+
     return (
         <div>
             <div className="flex justify-between items-center my-3">

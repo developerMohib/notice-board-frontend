@@ -10,6 +10,7 @@ import { instance } from "@/api/axiosInstance";
 import { showApiError } from "@/utils/errorpopup";
 import Swal from "sweetalert2";
 import Link from "next/link";
+import NoticeTableSkeleton from "./NoticeTableSkeleton";
 interface NoticeListProps {
     page: number;
     filters?: {
@@ -49,7 +50,7 @@ const Noticetable = ({ page, filters }: NoticeListProps) => {
     useEffect(() => {
     }, [selectedIds]);
 
-    if (isLoading) return <p>Loading...</p>;
+    if (isLoading) return <NoticeTableSkeleton />;
 
     const getStatusColor = (status: string) => {
         switch (status.toLowerCase()) {

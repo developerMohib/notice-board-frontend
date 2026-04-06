@@ -13,6 +13,7 @@ import { TbUsers } from "react-icons/tb";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { TiDocumentText } from "react-icons/ti";
 import { CiBellOn } from 'react-icons/ci';
+import NotFound from '@/app/not-found';
 
 const NewSidebar = ({ children }: { children: React.ReactNode }) => {
   const [openSubmenus, setOpenSubmenus] = useState<Record<string, boolean>>({});
@@ -48,7 +49,7 @@ const NewSidebar = ({ children }: { children: React.ReactNode }) => {
       href: null,
       children: [
         { label: 'Employee Database', href: '/employee/database' },
-        { label: 'Add New Employee', href: '/employee/create' },
+        { label: 'Add New Employee', href: '/employee/add-new' },
         { label: 'Performance Report', href: '/employee/performance-report' },
         { label: 'Performance History', href: '/employee/performance-history' },
       ],
