@@ -16,17 +16,17 @@ interface NoticeFilters {
 const NoticePage = () => {
     const [page, setPage] = useState(1);
     const [filters, setFilters] = useState<NoticeFilters>({});
-    const { data, refetch } = useNotices(page, 5, filters);
-    const notices: INotice[] = data?.data || [];
+  const { data, refetch, isLoading, isError, error } = useNotices(page, 5, filters);
+  const notices: INotice[] = data?.data || [];
 
     const activeNotices = notices?.filter(notice => notice.status.toLowerCase() === 'published');
     const draftNotices = notices?.filter(notice => notice.status.toLowerCase() === 'draft');
 
-useEffect(() => {
-  refetch();
-}, [page, filters]);
-
-
+  useEffect(() => {
+    refetch();
+  }, [page, filters, refetch]); 
+  if (isLoading) return <div>Loading notices...</div>;
+  if (isError) return <div>Error: {error?.message}</div>;
     return (
         <div>
             <div className="flex justify-between items-center my-3">

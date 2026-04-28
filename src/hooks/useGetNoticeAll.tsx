@@ -11,7 +11,7 @@ export const useNotices = (
     queryKey: ['notices', page, limit, filters],
     queryFn: () => fetchNotices(page, limit, filters),
     staleTime: 1000 * 60 * 2,
-    retry: 1,
+    retry: 1,enabled: true,
   });
 };
 
